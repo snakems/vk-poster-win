@@ -48,7 +48,7 @@ namespace vk_poster
             {
                 hashPos = e.Url.ToString().IndexOf("#");
             }
-            catch (NullReferenceException ex)
+            catch (NullReferenceException)
             {
                 // no cookie, proceed
             }

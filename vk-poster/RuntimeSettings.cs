@@ -8,5 +8,6 @@ namespace vk_poster
     {
         public string Groups;
         public string ImgPath;
+        public string Delay;
     }
 }

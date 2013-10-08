@@ -173,7 +173,7 @@ namespace vk_poster
                         VkApiResponseUploadPhotoAlbum respUpload = (VkApiResponseUploadPhotoAlbum)serializer.ReadObject(resp);
 
                         if (
-                            respUpload.response.aid == null ||
+                            respUpload.response.aid == 0 ||
                             respUpload.response.server == null ||
                             respUpload.response.photos_list == null ||
                             respUpload.response.hash == null

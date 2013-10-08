@@ -41,12 +41,18 @@ namespace vk_poster
             try
             {
                 this.RuntimeSettings = Serializer.Deserialize<RuntimeSettings>(this.RuntimeSettingsFile);
-            } catch (Exception Ex) {
-                // @todo write to log
+            }
+            catch (Exception)
+            {
                 this.RuntimeSettings = new RuntimeSettings();
             }
 
             InitializeComponent();
+
+            if (!String.IsNullOrWhiteSpace(this.RuntimeSettings.Delay))
+            {
+                this.Delay.Value = Convert.ToDecimal(this.RuntimeSettings.Delay);
+            }
 
             if (!String.IsNullOrWhiteSpace(this.RuntimeSettings.Groups))
             {
@@ -81,9 +87,12 @@ namespace vk_poster
                 parameters["from_group"] = "1";
                 parameters["message"] = this.Message.Text;
 
-                if (!String.IsNullOrWhiteSpace(this.Attachments.Text)) {
+                if (!String.IsNullOrWhiteSpace(this.Attachments.Text))
+                {
                     parameters["attachments"] = this.Attachments.Text.Replace(" ", "");
-                } else {
+                }
+                else
+                {
                     // parameters["attachments"] = api.uploadAttachments(this.openFileDialog.FileNames, this.AuthParams.userId);
                 }
 
@@ -91,14 +100,17 @@ namespace vk_poster
                 {
                     Serializer Serializer = new Serializer();
                     this.RuntimeSettings.Groups = this.Groups.Text;
+                    this.RuntimeSettings.Delay = this.Delay.Value.ToString();
                     Serializer.Serialize(this.RuntimeSettings, this.RuntimeSettingsFile);
                 }
-                catch (Exception Ex)
+                catch (Exception)
                 {
-                    // @todo write to log
                 }
 
-                string [] groups = this.Groups.Text.Split(',');
+                string[] groups = this.Groups.Text.Split(',');
+                groups = groups.Where(g => g.Trim() != "").ToArray();
+
+                string lastGroup = groups.Last();
 
                 foreach (string group in groups)
                 {
@@ -117,9 +129,16 @@ namespace vk_poster
                                 "(" + errorCode + ") " + errorMsg
                                 );
                         }
-                        
-                        // @todo return uri of created post
-                        // int postId = response.response.post_id;
+
+                        int delay = Convert.ToInt32(this.Delay.Value) * 1000;
+
+                        if (
+                            delay > 0 &&
+                            lastGroup != group
+                            )
+                        {
+                            System.Threading.Thread.Sleep(delay);
+                        }
                     }
                 }
 
@@ -133,7 +152,7 @@ namespace vk_poster
             catch (VkApiException ex)
             {
                 this.label_status.Text = "ошибка при выполнении запроса";
-                MessageBox.Show("Ошибка при работе с API: " + ex.ToString());
+                MessageBox.Show("Ошибка при работе с API: " + ex.Message + "\n" + ex.ToString());
             }
         }
 

@@ -48,16 +48,19 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label_attachments_local = new System.Windows.Forms.Label();
             this.button_relogin = new System.Windows.Forms.Button();
+            this.label_delay = new System.Windows.Forms.Label();
+            this.Delay = new System.Windows.Forms.NumericUpDown();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Delay)).BeginInit();
             this.SuspendLayout();
             // 
             // button_post
             // 
             this.button_post.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button_post.Location = new System.Drawing.Point(12, 532);
+            this.button_post.Location = new System.Drawing.Point(12, 556);
             this.button_post.Name = "button_post";
             this.button_post.Size = new System.Drawing.Size(75, 23);
-            this.button_post.TabIndex = 6;
+            this.button_post.TabIndex = 7;
             this.button_post.Text = "Отправить";
             this.button_post.UseVisualStyleBackColor = true;
             this.button_post.Click += new System.EventHandler(this.button_post_Click);
@@ -142,7 +145,7 @@
             // 
             this.label_status.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label_status.AutoSize = true;
-            this.label_status.Location = new System.Drawing.Point(102, 537);
+            this.label_status.Location = new System.Drawing.Point(102, 561);
             this.label_status.Name = "label_status";
             this.label_status.Size = new System.Drawing.Size(0, 13);
             this.label_status.TabIndex = 0;
@@ -188,7 +191,7 @@
             this.listView.Location = new System.Drawing.Point(9, 170);
             this.listView.Name = "listView";
             this.listView.ShowGroups = false;
-            this.listView.Size = new System.Drawing.Size(458, 10);
+            this.listView.Size = new System.Drawing.Size(458, 0);
             this.listView.TabIndex = 0;
             this.listView.TabStop = false;
             this.listView.UseCompatibleStateImageBehavior = false;
@@ -213,7 +216,7 @@
             this.groupBox1.Controls.Add(this.label_sub_attachments);
             this.groupBox1.Location = new System.Drawing.Point(12, 318);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(473, 186);
+            this.groupBox1.Size = new System.Drawing.Size(473, 174);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Изображения, видео, музыка";
@@ -238,11 +241,36 @@
             this.button_relogin.UseVisualStyleBackColor = true;
             this.button_relogin.Click += new System.EventHandler(this.button_relogin_Click);
             // 
+            // label_delay
+            // 
+            this.label_delay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label_delay.AutoSize = true;
+            this.label_delay.Location = new System.Drawing.Point(9, 518);
+            this.label_delay.Name = "label_delay";
+            this.label_delay.Size = new System.Drawing.Size(252, 13);
+            this.label_delay.TabIndex = 12;
+            this.label_delay.Text = "Время ожидания между запросами (в секундах)";
+            // 
+            // Delay
+            // 
+            this.Delay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.Delay.Location = new System.Drawing.Point(267, 516);
+            this.Delay.Maximum = new decimal(new int[] {
+            360,
+            0,
+            0,
+            0});
+            this.Delay.Name = "Delay";
+            this.Delay.Size = new System.Drawing.Size(48, 20);
+            this.Delay.TabIndex = 6;
+            // 
             // PostForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(497, 567);
+            this.ClientSize = new System.Drawing.Size(497, 591);
+            this.Controls.Add(this.Delay);
+            this.Controls.Add(this.label_delay);
             this.Controls.Add(this.button_relogin);
             this.Controls.Add(this.label_status);
             this.Controls.Add(this.label_sub_groups);
@@ -258,6 +286,7 @@
             this.Text = "vk-poster";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Delay)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -283,6 +312,8 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label_attachments_local;
         private System.Windows.Forms.Button button_relogin;
+        private System.Windows.Forms.Label label_delay;
+        private System.Windows.Forms.NumericUpDown Delay;
     }
 }
 
