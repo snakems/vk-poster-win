@@ -89,26 +89,34 @@ namespace vk_poster
 
         protected T _call<T>(string method, NameValueCollection parameters) where T : VkApiResponse
         {
-            string uri = this.apiUrl + method + "?";
+            string uri = this.apiUrl + method;
             parameters["access_token"] = this.accessToken;
-            uri += this.toQueryString(parameters);
+            string parametersStr = this.toQueryString(parameters);
 
             HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(uri);
             request.UserAgent = "stpk/0.1a";
-            request.Method = "GET";
+            request.Method = "POST";
+            request.ContentLength = parametersStr.Length;
+            request.ContentType = "application/x-www-form-urlencoded";
             request.Timeout = this.timeout;
+
+            StreamWriter writer = new StreamWriter(request.GetRequestStream());
+            writer.Write(parametersStr);
+            writer.Close();
 
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             Stream responseStream = response.GetResponseStream();
 
             if (responseStream == null)
             {
+                responseStream.Close();
                 throw new VkApiException("Сервер \"Вконтакте\" не вернул результат.");
             }
             else
             {
                 DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(T));
                 T apiResponse = (T)serializer.ReadObject(responseStream);
+                responseStream.Close();
 
                 return apiResponse;
             }
